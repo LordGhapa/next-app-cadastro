@@ -7,23 +7,32 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-  "commit": "cz"
+    "commit": "cz"
   },
   "dependencies": {
+    "next": "13.5.6",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "13.5.6"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "autoprefixer": "^10",
-    "postcss": "^8",
-    "tailwindcss": "^3",
-    "eslint": "^8",
-    "eslint-config-next": "13.5.6"
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "autoprefixer": "latest",
+    "eslint": "^8.50.0",
+    "eslint-config-next": "latest",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-standard-with-typescript": "^39.1.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-n": "^16.1.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.33.2",
+    "postcss": "latest",
+    "prettier-plugin-tailwindcss": "^0.5.4",
+    "tailwindcss": "latest",
+    "typescript": "^5.2.2"
   },
   "config": {
     "commitizen": {
