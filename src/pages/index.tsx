@@ -1,7 +1,34 @@
+import Layout from "@/components/Layout";
+import Tabela from "@/components/Tabela";
+import Cliente from "@/core/Cliente";
+
 export default function Home() {
+  const clientes = [
+    new Cliente("Ana", 34, "1"),
+    new Cliente("Bia", 35, "2"),
+    new Cliente("Carla", 36, "3"),
+    new Cliente("Pedro", 37, "4"),
+  ];
+
+  function clienteSelecionado(cliente: Cliente) {
+    console.log(cliente.nome);
+    console.log(cliente.idade);
+  }
+  function clienteExcluido(cliente: Cliente) {
+    console.log(cliente.nome);
+    console.log(cliente.idade);
+  }
   return (
     <>
-      <h2 className="mb-10 text-5xl  font-bold">PORTFOLIO</h2>
+      <div className={`flex h-screen items-center  justify-center text-white`}>
+        <Layout titulo="Cadastro Simples">
+          <Tabela
+            clientes={clientes}
+            clienteSelecionado={clienteSelecionado}
+            clienteExcluido={clienteExcluido}
+          ></Tabela>
+        </Layout>
+      </div>
     </>
   );
 }
