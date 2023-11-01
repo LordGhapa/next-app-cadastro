@@ -1,31 +1,53 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import ColecaoCliente from "@/backend/db/ColecaoCliente";
 import Botao from "@/components/Botao";
 import Formulario from "@/components/Formulario";
 import Layout from "@/components/Layout";
 import Tabela from "@/components/Tabela";
 import Cliente from "@/core/Cliente";
-import { useState } from "react";
+import type ClienteRepositorio from "@/core/ClienteRepositorio";
+import { useState, useEffect } from "react";
 
 export default function Home() {
+  const repo: ClienteRepositorio = new ColecaoCliente();
+
+  const [cliente, setCliente] = useState<Cliente>(Cliente.vazio());
+  const [clientes, setClientes] = useState<Cliente[]>([]);
   const [visivel, setVisivel] = useState<"tabela" | "formulario">("tabela");
 
-  function salvarCliente(cliente: Cliente) {
-    console.log(cliente);
-    console.log(typeof cliente.idade);
-  }
-  const clientes = [
-    new Cliente("Ana", 34, "1"),
-    new Cliente("Bia", 35, "2"),
-    new Cliente("Carla", 36, "3"),
-    new Cliente("Pedro", 37, "4"),
-  ];
+  // const clientes = [
+  //   new Cliente("Ana", 34, "1"),
+  //   new Cliente("Bia", 35, "2"),
+  //   new Cliente("Carla", 36, "3"),
+  //   new Cliente("Pedro", 37, "4"),
+  // ];
 
-  function clienteSelecionado(cliente: Cliente) {
-    console.log(cliente.nome);
-    console.log(cliente.idade);
+  useEffect(() => {
+    void obterTodos();
+  }, []);
+
+  async function obterTodos() {
+    await repo.obterTodos().then((clientes) => {
+      setClientes(clientes);
+      setVisivel("tabela");
+    });
   }
-  function clienteExcluido(cliente: Cliente) {
-    console.log(cliente.nome);
-    console.log(cliente.idade);
+
+  async function salvarCliente(cliente: Cliente) {
+    await repo.salvar(cliente);
+    await obterTodos();
+  }
+  function clienteSelecionado(cliente: Cliente) {
+    setCliente(cliente);
+    setVisivel("formulario");
+  }
+  async function clienteExcluido(cliente: Cliente) {
+    await repo.excluir(cliente);
+    await obterTodos();
+  }
+  function novoCliente() {
+    setCliente(Cliente.vazio());
+    setVisivel("formulario");
   }
   return (
     <>
@@ -34,13 +56,7 @@ export default function Home() {
           {visivel === "tabela" ? (
             <>
               <div className="flex justify-end">
-                <Botao
-                  onClick={() => {
-                    setVisivel("formulario");
-                  }}
-                  className="mb-4"
-                  cor="green"
-                >
+                <Botao onClick={novoCliente} className="mb-4" cor="green">
                   Novo Cliente
                 </Botao>
               </div>
@@ -52,7 +68,7 @@ export default function Home() {
             </>
           ) : (
             <Formulario
-              cliente={clientes[2]}
+              cliente={cliente}
               clienteMudou={salvarCliente}
               cancelado={() => {
                 setVisivel("tabela");

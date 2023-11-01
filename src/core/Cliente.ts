@@ -1,9 +1,9 @@
 export default class Cliente {
-  readonly #id: string | null;
+  readonly #id: string | undefined;
   readonly #nome: string;
   readonly #idade: number;
 
-  constructor(nome: string, idade: number, id: string | null = null) {
+  constructor(nome: string, idade: number, id: string | undefined = undefined) {
     this.#id = id;
     this.#nome = nome;
     this.#idade = idade;
